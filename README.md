@@ -28,7 +28,9 @@ The application uses the following configuration (can be set in `appsettings.jso
    dotnet ef database update
 Run the app:
 
-Bash
+```bash
 dotnet run --project ToDoApp.Api
-📜 API Documentation
+
+##📜 API Documentation
+
 When the app is running in Development mode, Swagger UI is available at: http://localhost:7095/swagger
