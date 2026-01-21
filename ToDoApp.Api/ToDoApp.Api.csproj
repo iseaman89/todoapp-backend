@@ -22,12 +22,6 @@
         <ProjectReference Include="..\ToDoApp.Infrastructure\ToDoApp.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
     <PropertyGroup>
         <PreserveCompilationContext>true</PreserveCompilationContext>
     </PropertyGroup>
