@@ -1,36 +1,35 @@
-# ToDo App - Backend (API)
 
-A robust REST API built with ASP.NET Core 8, providing authentication and task management for the ToDo application.
+# TodoApp Backend
 
-## ✨ Features
-- **Clean Architecture** (Api, Application, Domain, Infrastructure).
-- **Identity Framework** for User registration and login.
-- **JWT Authentication** for secure access.
-- **PostgreSQL** integration using EF Core.
-- **Automatic Migrations** via Docker.
+This repository contains the backend API for the Todo application, built with **ASP.NET Core (.NET 8)** using a clean layered architecture.
 
-## 🛠️ Development Setup
+## Features
 
-### Prerequisites
-- .NET 8 SDK
-- PostgreSQL (or Docker)
+- REST API
+- JWT Authentication
+- Entity Framework Core
+- PostgreSQL
+- Docker-ready
 
-### Environment Variables
-The application uses the following configuration (can be set in `appsettings.json` or Environment Variables):
-- `ConnectionStrings:DefaultConnection`: PostgreSQL connection string.
-- `Jwt:Key`: Secret key for token signing (min 32 characters).
-- `Jwt:Issuer` / `Jwt:Audience`.
+## Tech Stack
 
-### Running Locally
-1. Configure your database in `appsettings.json`.
-2. Apply migrations:
-   ```bash
-   dotnet ef database update
-Run the app:
+- .NET 8
+- ASP.NET Core Web API
+- Entity Framework Core
+- PostgreSQL
 
-```bash
-dotnet run --project ToDoApp.Api
+## Run with Docker
 
-##📜 API Documentation
+The backend is designed to run via Docker Compose (see root README).
 
-When the app is running in Development mode, Swagger UI is available at: http://localhost:7095/swagger
+## API Endpoints
+
+| Method | Endpoint | Description |
+|------|---------|-------------|
+| POST | /api/Auth/register | Register |
+| POST | /api/Auth/login | Login |
+| GET | /api/ToDo | Get todos |
+| POST | /api/ToDo | Create todo |
+| PUT | /api/ToDo | Update todo |
+| GET | /api/ToDo{id} | Get todo |
+| DELETE | /api/ToDo{id} | DELETE todo |
