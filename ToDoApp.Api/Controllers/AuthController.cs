@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
         var exists = await _userManager.FindByEmailAsync(req.Email);
         if (exists != null) return BadRequest("Email already in use");
 
-        var user = new ApplicationUser { Id = Guid.NewGuid(), Email = req.Email, UserName = req.Email };
+        var user = new ApplicationUser { Id = Guid.NewGuid(), Email = req.Email, UserName = req.Name };
         var create = await _userManager.CreateAsync(user, req.Password);
         if (!create.Succeeded) return BadRequest(create.Errors);
 
@@ -62,7 +62,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Refresh([FromBody] RefreshRequest req)
     {
         var pair = await _tokenService.RefreshAsync(req.RefreshToken, HttpContext.Connection.RemoteIpAddress?.ToString());
-        if (pair == null) return Unauthorized();
+        if (pair is null) return Unauthorized();
 
         return Ok(new { tokens = pair });
     }

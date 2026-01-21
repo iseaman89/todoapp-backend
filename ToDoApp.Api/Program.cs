@@ -3,6 +3,7 @@ using ToDoApp.Infrastructure;
 using ToDoApp.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ToDoApp.Api.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,21 @@ builder.Services.AddSwaggerGen();
 // Layers
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevCors", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173",
+                "http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -41,9 +57,13 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseCors("DevCors");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

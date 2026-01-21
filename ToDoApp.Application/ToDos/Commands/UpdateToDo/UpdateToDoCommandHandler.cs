@@ -25,7 +25,7 @@ public class UpdateToDoCommandHandler : IRequestHandler<UpdateToDoCommand, Unit>
 
         if (toDo is null) throw new Exception("ToDo not found");
         
-        toDo.Update(request.Title);
+        toDo.Update(request.Title, request.IsCompleted, request.Priority, request.Category);
         
         await _context.SaveChangesAsync(cancellationToken);
         

@@ -11,11 +11,11 @@ public class CreateToDoHandler : IRequestHandler<CreateToDoCommand, CreateToDoDt
     private readonly IMapper _mapper;
     private readonly IUserContextService _userContextService;
 
-    public CreateToDoHandler(IApplicationDbContext context, IMapper mapper, IUserContextService _userContextService)
+    public CreateToDoHandler(IApplicationDbContext context, IMapper mapper, IUserContextService userContextService)
     {
         _context = context;
         _mapper = mapper;
-        this._userContextService = _userContextService;
+        this._userContextService = userContextService;
     }
     
     public async Task<CreateToDoDto> Handle(CreateToDoCommand request, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ public class CreateToDoHandler : IRequestHandler<CreateToDoCommand, CreateToDoDt
         var userId = _userContextService.UserId;
         if (userId is null) throw new UnauthorizedAccessException();
 
-        var toDo = ToDo.Create(userId.Value, request.Title);
+        var toDo = ToDo.Create(userId.Value, request.Title, request.Priority, request.Category);
 
         _context.ToDos.Add(toDo);
         await _context.SaveChangesAsync(cancellationToken);

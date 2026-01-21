@@ -22,16 +22,16 @@ public class ToDoController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAll(GetAllTodosQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var toDos = await _mediator.Send(query, cancellationToken);
+        var toDos = await _mediator.Send(new GetAllTodosQuery(), cancellationToken);
         return Ok(toDos);
     }
     
-    [HttpGet("id")]
-    public async Task<IActionResult> GetById(GetToDoByIdQuery query, CancellationToken cancellationToken)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        var toDo = await _mediator.Send(query, cancellationToken);
+        var toDo = await _mediator.Send(new GetToDoByIdQuery(id), cancellationToken);
         return Ok(toDo);
     }
 
@@ -49,10 +49,10 @@ public class ToDoController : ControllerBase
         return Ok(unit);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Delete(DeleteToDoCommand command, CancellationToken cancellationToken)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var unit = await _mediator.Send(command, cancellationToken);
+        var unit = await _mediator.Send(new DeleteToDoCommand(id), cancellationToken);
         return Ok(unit);
     }
 }
